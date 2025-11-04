@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -31,8 +32,14 @@ interface Route {
 }
 
 const Index = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('travelers');
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+  const startPosRef = useRef({ x: 0, y: 0 });
 
   const travelers: Traveler[] = [
     {
@@ -109,13 +116,54 @@ const Index = () => {
   const currentTraveler = travelers[currentCardIndex];
 
   const handleSwipe = (direction: 'like' | 'pass') => {
-    if (direction === 'like') {
-      console.log('Liked:', currentTraveler.name);
-    }
-    if (currentCardIndex < travelers.length - 1) {
-      setCurrentCardIndex(currentCardIndex + 1);
+    setSwipeDirection(direction === 'like' ? 'right' : 'left');
+    
+    setTimeout(() => {
+      if (direction === 'like') {
+        console.log('Liked:', currentTraveler.name);
+      }
+      if (currentCardIndex < travelers.length - 1) {
+        setCurrentCardIndex(currentCardIndex + 1);
+      } else {
+        setCurrentCardIndex(0);
+      }
+      setSwipeDirection(null);
+      setDragOffset({ x: 0, y: 0 });
+    }, 300);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    startPosRef.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    startPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    const offsetX = e.clientX - startPosRef.current.x;
+    const offsetY = e.clientY - startPosRef.current.y;
+    setDragOffset({ x: offsetX, y: offsetY });
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    const offsetX = e.touches[0].clientX - startPosRef.current.x;
+    const offsetY = e.touches[0].clientY - startPosRef.current.y;
+    setDragOffset({ x: offsetX, y: offsetY });
+  };
+
+  const handleRelease = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    if (Math.abs(dragOffset.x) > 150) {
+      handleSwipe(dragOffset.x > 0 ? 'like' : 'pass');
     } else {
-      setCurrentCardIndex(0);
+      setDragOffset({ x: 0, y: 0 });
     }
   };
 
@@ -128,10 +176,20 @@ const Index = () => {
               TravelMatch
             </h1>
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" className="hover:bg-white/50">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-white/50"
+                onClick={() => navigate('/notifications')}
+              >
                 <Icon name="Bell" className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="hover:bg-white/50">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-white/50"
+                onClick={() => navigate('/chats')}
+              >
                 <Icon name="MessageCircle" className="h-5 w-5" />
               </Button>
               <Avatar className="h-10 w-10 ring-2 ring-primary/20">
@@ -163,15 +221,43 @@ const Index = () => {
           </TabsList>
 
           <TabsContent value="travelers" className="space-y-6 animate-fade-in">
-            <div className="max-w-lg mx-auto">
-              <Card className="relative overflow-hidden border-0 shadow-2xl bg-white/90 backdrop-blur-sm">
+            <div className="max-w-lg mx-auto relative" style={{ height: '600px' }}>
+              <Card
+                ref={cardRef}
+                className="absolute inset-0 overflow-hidden border-0 shadow-2xl bg-white/90 backdrop-blur-sm cursor-grab active:cursor-grabbing select-none"
+                style={{
+                  transform: `translate(${dragOffset.x}px, ${dragOffset.y}px) rotate(${dragOffset.x * 0.05}deg)`,
+                  transition: isDragging ? 'none' : 'all 0.3s ease-out',
+                  opacity: swipeDirection ? 0 : 1,
+                }}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleRelease}
+                onMouseLeave={handleRelease}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleRelease}
+              >
                 <div className="relative h-96 overflow-hidden">
                   <img
                     src={currentTraveler.avatar}
                     alt={currentTraveler.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover pointer-events-none"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
+                  {dragOffset.x > 50 && (
+                    <div className="absolute top-8 left-8 text-6xl font-bold text-green-500 border-4 border-green-500 px-6 py-2 rounded-lg rotate-12">
+                      ❤️
+                    </div>
+                  )}
+                  
+                  {dragOffset.x < -50 && (
+                    <div className="absolute top-8 right-8 text-6xl font-bold text-red-500 border-4 border-red-500 px-6 py-2 rounded-lg -rotate-12">
+                      ✖
+                    </div>
+                  )}
+                  
                   <Badge className="absolute top-4 right-4 animate-pulse-glow bg-gradient-to-r from-primary to-secondary border-0 text-white text-lg px-4 py-2">
                     <Icon name="Sparkles" className="mr-1 h-4 w-4" />
                     {currentTraveler.compatibility}% совпадение
@@ -324,19 +410,39 @@ const Index = () => {
       <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-white/20 z-50">
         <div className="container mx-auto px-4">
           <div className="flex justify-around py-4">
-            <Button variant="ghost" size="icon" className="flex-col h-auto py-2 hover:bg-primary/10">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="flex-col h-auto py-2 hover:bg-primary/10"
+              onClick={() => navigate('/')}
+            >
               <Icon name="Compass" className="h-6 w-6 text-primary" />
               <span className="text-xs mt-1">Открыть</span>
             </Button>
-            <Button variant="ghost" size="icon" className="flex-col h-auto py-2 hover:bg-primary/10">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="flex-col h-auto py-2 hover:bg-primary/10"
+              onClick={() => navigate('/search')}
+            >
               <Icon name="Search" className="h-6 w-6" />
               <span className="text-xs mt-1">Поиск</span>
             </Button>
-            <Button variant="ghost" size="icon" className="flex-col h-auto py-2 hover:bg-primary/10">
-              <Icon name="Heart" className="h-6 w-6" />
-              <span className="text-xs mt-1">Избранное</span>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="flex-col h-auto py-2 hover:bg-primary/10"
+              onClick={() => navigate('/map')}
+            >
+              <Icon name="Map" className="h-6 w-6" />
+              <span className="text-xs mt-1">Карта</span>
             </Button>
-            <Button variant="ghost" size="icon" className="flex-col h-auto py-2 hover:bg-primary/10">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="flex-col h-auto py-2 hover:bg-primary/10"
+              onClick={() => navigate('/profile')}
+            >
               <Icon name="User" className="h-6 w-6" />
               <span className="text-xs mt-1">Профиль</span>
             </Button>
