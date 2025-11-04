@@ -18,6 +18,10 @@ interface Traveler {
   travelStyle: string[];
   bio: string;
   nextDestination: string;
+  rating: number;
+  tripsCompleted: number;
+  reviews: number;
+  verified: boolean;
 }
 
 interface Route {
@@ -53,6 +57,10 @@ const Index = () => {
       travelStyle: ['Приключения', 'Культура', 'Природа'],
       bio: 'Люблю спонтанные поездки и открывать новые места!',
       nextDestination: 'Грузия',
+      rating: 4.8,
+      tripsCompleted: 12,
+      reviews: 23,
+      verified: true,
     },
     {
       id: 2,
@@ -65,6 +73,10 @@ const Index = () => {
       travelStyle: ['Приключения', 'Активный отдых', 'Вечеринки'],
       bio: 'Ищу компанию для путешествий по Азии',
       nextDestination: 'Бали',
+      rating: 4.6,
+      tripsCompleted: 8,
+      reviews: 15,
+      verified: true,
     },
     {
       id: 3,
@@ -77,6 +89,10 @@ const Index = () => {
       travelStyle: ['Духовные практики', 'Эко-туризм', 'Релакс'],
       bio: 'В поисках баланса и гармонии в путешествиях',
       nextDestination: 'Индия',
+      rating: 4.9,
+      tripsCompleted: 16,
+      reviews: 31,
+      verified: true,
     },
   ];
 
@@ -168,13 +184,18 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/20">
+    <div className="min-h-screen bg-background">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-              TravelMatch
-            </h1>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                <Icon name="Heart" className="h-5 w-5 text-white" />
+              </div>
+              <h1 className="text-xl font-bold text-foreground">
+                TravelFRIENDS
+              </h1>
+            </div>
             <div className="flex items-center gap-4">
               <Button
                 variant="ghost"
@@ -258,10 +279,18 @@ const Index = () => {
                     </div>
                   )}
                   
-                  <Badge className="absolute top-4 right-4 animate-pulse-glow bg-gradient-to-r from-primary to-secondary border-0 text-white text-lg px-4 py-2">
-                    <Icon name="Sparkles" className="mr-1 h-4 w-4" />
-                    {currentTraveler.compatibility}% совпадение
-                  </Badge>
+                  <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
+                    <Badge className="bg-primary/90 backdrop-blur-sm border-0 text-white text-lg px-4 py-2 shadow-lg">
+                      <Icon name="Sparkles" className="mr-1 h-4 w-4" />
+                      {currentTraveler.compatibility}%
+                    </Badge>
+                    {currentTraveler.verified && (
+                      <Badge className="bg-accent/90 backdrop-blur-sm border-0 text-white px-3 py-1 shadow-lg">
+                        <Icon name="ShieldCheck" className="mr-1 h-3 w-3" />
+                        Verified
+                      </Badge>
+                    )}
+                  </div>
                 </div>
 
                 <div className="p-6 space-y-4">
@@ -275,6 +304,21 @@ const Index = () => {
                         {currentTraveler.location}
                       </p>
                     </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-xl">
+                    <div className="flex items-center gap-1">
+                      <Icon name="Star" className="h-4 w-4 text-secondary fill-secondary" />
+                      <span className="font-semibold">{currentTraveler.rating}</span>
+                    </div>
+                    <div className="w-px h-4 bg-border" />
+                    <span className="text-sm text-muted-foreground">
+                      {currentTraveler.tripsCompleted} поездок
+                    </span>
+                    <div className="w-px h-4 bg-border" />
+                    <span className="text-sm text-muted-foreground">
+                      {currentTraveler.reviews} отзывов
+                    </span>
                   </div>
 
                   <p className="text-sm text-muted-foreground">{currentTraveler.bio}</p>
