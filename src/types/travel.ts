@@ -145,7 +145,7 @@ export const ROUTES_DATA: Route[] = [
   {
     id: 1,
     title: 'Золотое кольцо России',
-    image: 'https://images.unsplash.com/photo-1547448415-e9f5b28e570d?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=800&h=600&fit=crop',
     destination: 'Владимир, Суздаль, Ярославль',
     duration: '5 дней',
     budget: '₽25,000',
@@ -155,7 +155,7 @@ export const ROUTES_DATA: Route[] = [
   {
     id: 2,
     title: 'Горы Кавказа',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80',
     destination: 'Домбай, Архыз, Эльбрус',
     duration: '7 дней',
     budget: '₽35,000',
@@ -165,7 +165,7 @@ export const ROUTES_DATA: Route[] = [
   {
     id: 3,
     title: 'Байкал: жемчужина Сибири',
-    image: 'https://images.unsplash.com/photo-1590004953392-5aba2e72269a?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1552889826-7c673c01bfab?w=800&h=600&fit=crop&q=80',
     destination: 'Иркутск, Листвянка, Ольхон',
     duration: '10 дней',
     budget: '₽45,000',
@@ -175,7 +175,7 @@ export const ROUTES_DATA: Route[] = [
   {
     id: 4,
     title: 'Алтай: край гор и рек',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800&h=600&fit=crop&q=80',
     destination: 'Белокуриха, Чемал, Телецкое озеро',
     duration: '8 дней',
     budget: '₽38,000',
@@ -185,7 +185,7 @@ export const ROUTES_DATA: Route[] = [
   {
     id: 5,
     title: 'Карелия: край озёр',
-    image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800&h=600&fit=crop&q=80',
     destination: 'Кижи, Рускеала, Валаам',
     duration: '6 дней',
     budget: '₽32,000',
@@ -195,7 +195,7 @@ export const ROUTES_DATA: Route[] = [
   {
     id: 6,
     title: 'Камчатка: вулканы и океан',
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80',
     destination: 'Петропавловск-Камчатский, Долина гейзеров',
     duration: '12 дней',
     budget: '₽85,000',

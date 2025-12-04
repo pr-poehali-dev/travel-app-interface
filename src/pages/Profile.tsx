@@ -29,7 +29,7 @@ const Profile = () => {
             <h1 className="text-xl font-semibold text-foreground">
               Профиль
             </h1>
-            <Button variant="ghost" size="icon" className="rounded-full">
+            <Button variant="ghost" size="icon" className="rounded-full" onClick={() => navigate('/settings')}>
               <Icon name="Settings" className="h-5 w-5" />
             </Button>
           </div>
