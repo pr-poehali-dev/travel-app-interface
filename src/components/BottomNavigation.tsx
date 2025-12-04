@@ -11,7 +11,6 @@ export const BottomNavigation = ({ onNavigate, currentPath = '/' }: BottomNaviga
     { path: '/', icon: 'Compass', label: 'Открыть' },
     { path: '/search', icon: 'Search', label: 'Поиск' },
     { path: '/chats', icon: 'MessageCircle', label: 'Чаты' },
-    { path: '/notifications', icon: 'Bell', label: 'Уведомления' },
     { path: '/profile', icon: 'User', label: 'Профиль' },
   ];
 

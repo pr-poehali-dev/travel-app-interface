@@ -40,7 +40,7 @@ const Profile = () => {
         <Card className="p-6 bg-white/90 backdrop-blur-sm border-0 shadow-xl">
           <div className="flex flex-col items-center text-center space-y-4">
             <Avatar className="h-32 w-32 ring-4 ring-primary/20">
-              <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop" />
+              <AvatarImage src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop" />
               <AvatarFallback>ИП</AvatarFallback>
             </Avatar>
 

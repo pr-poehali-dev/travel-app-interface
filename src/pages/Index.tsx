@@ -77,14 +77,7 @@ const Index = () => {
           </TabsList>
 
           <TabsContent value="travelers" className="animate-fade-in">
-            <div className="space-y-6">
-              <div className="text-center space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  {currentCardIndex + 1} / {TRAVELERS_DATA.length}
-                </p>
-              </div>
-              <TravelerCard traveler={currentTraveler} onSwipe={handleSwipe} />
-            </div>
+            <TravelerCard traveler={currentTraveler} onSwipe={handleSwipe} />
           </TabsContent>
 
           <TabsContent value="routes" className="animate-fade-in">

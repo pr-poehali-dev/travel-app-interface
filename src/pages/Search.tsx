@@ -201,12 +201,12 @@ const Search = () => {
             <Icon name="TrendingUp" className="h-5 w-5 text-primary" />
             Популярные направления
           </h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            {['Бали', 'Грузия', 'Турция'].map((destination) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {['Байкал', 'Алтай', 'Камчатка', 'Карелия', 'Сочи', 'Кавказ', 'Золотое кольцо', 'Владивосток'].map((destination) => (
               <Badge
                 key={destination}
                 variant="outline"
-                className="p-4 text-base justify-center cursor-pointer hover:bg-primary/10 transition-all"
+                className="p-3 text-sm justify-center cursor-pointer hover:bg-primary/10 transition-all"
               >
                 {destination}
               </Badge>
@@ -240,10 +240,10 @@ const Search = () => {
               variant="ghost"
               size="icon"
               className="flex-col h-auto py-2 hover:bg-primary/10"
-              onClick={() => navigate('/map')}
+              onClick={() => navigate('/chats')}
             >
-              <Icon name="Map" className="h-6 w-6" />
-              <span className="text-xs mt-1">Карта</span>
+              <Icon name="MessageCircle" className="h-6 w-6" />
+              <span className="text-xs mt-1">Чаты</span>
             </Button>
             <Button
               variant="ghost"
