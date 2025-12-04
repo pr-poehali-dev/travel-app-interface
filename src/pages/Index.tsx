@@ -34,9 +34,7 @@ const Index = () => {
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
                 <Icon name="Heart" className="h-5 w-5 text-white" />
               </div>
-              <h1 className="text-xl font-bold text-foreground">
-                TravelFRIENDS
-              </h1>
+              <h1 className="text-xl font-bold text-foreground">TRIPFinder</h1>
             </div>
             <div className="flex items-center gap-2">
               <button
