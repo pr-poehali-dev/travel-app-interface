@@ -27,28 +27,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b shadow-sm">
-        <div className="container mx-auto px-4 py-4">
+      <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
+            <h1 className="text-xl font-semibold text-foreground">Знакомства</h1>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-                <Icon name="Heart" className="h-5 w-5 text-white" />
-              </div>
-              <h1 className="text-xl font-bold text-foreground">TRIPFinder</h1>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => navigate('/map')}
-                className="p-2 hover:bg-muted rounded-lg transition-colors"
-              >
-                <Icon name="Map" className="h-5 w-5 text-foreground" />
-              </button>
               <button
                 onClick={() => navigate('/notifications')}
-                className="p-2 hover:bg-muted rounded-lg transition-colors relative"
+                className="p-2 hover:bg-muted rounded-full transition-colors relative"
               >
                 <Icon name="Bell" className="h-5 w-5 text-foreground" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-destructive rounded-full"></span>
               </button>
             </div>
           </div>
@@ -57,19 +46,17 @@ const Index = () => {
 
       <main className="container mx-auto px-4 py-8 pb-24">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8 bg-white/90 backdrop-blur-sm border-0 shadow-lg p-2 h-14">
+          <TabsList className="grid w-full grid-cols-2 mb-6 bg-muted h-10 p-1">
             <TabsTrigger
               value="travelers"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white text-lg font-semibold"
+              className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-md font-medium"
             >
-              <Icon name="Users" className="mr-2 h-5 w-5" />
               Путешественники
             </TabsTrigger>
             <TabsTrigger
               value="routes"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white text-lg font-semibold"
+              className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-md font-medium"
             >
-              <Icon name="Map" className="mr-2 h-5 w-5" />
               Маршруты
             </TabsTrigger>
           </TabsList>

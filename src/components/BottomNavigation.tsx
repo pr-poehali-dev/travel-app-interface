@@ -15,21 +15,21 @@ export const BottomNavigation = ({ onNavigate, currentPath = '/' }: BottomNaviga
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-white/20 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-around py-4">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t z-50">
+      <div className="container mx-auto px-2">
+        <div className="flex justify-around py-2">
           {navItems.map((item) => (
             <Button
               key={item.path}
               variant="ghost"
               size="icon"
-              className={`flex-col h-auto py-2 hover:bg-primary/10 ${
-                currentPath === item.path ? 'text-primary' : ''
+              className={`flex-col h-auto py-2 rounded-lg transition-colors ${
+                currentPath === item.path ? 'text-primary' : 'text-muted-foreground'
               }`}
               onClick={() => onNavigate(item.path)}
             >
               <Icon name={item.icon as any} className="h-6 w-6" />
-              <span className="text-xs mt-1">{item.label}</span>
+              <span className="text-[10px] mt-1">{item.label}</span>
             </Button>
           ))}
         </div>

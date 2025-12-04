@@ -65,7 +65,7 @@ export const TravelerCard = ({ traveler, onSwipe }: TravelerCardProps) => {
   return (
     <Card
       ref={cardRef}
-      className={`max-w-md mx-auto bg-white/90 backdrop-blur-sm border-0 shadow-2xl overflow-hidden transition-all duration-300 ${
+      className={`max-w-md mx-auto bg-white border-0 shadow-lg overflow-hidden transition-all duration-300 ${
         swipeDirection === 'right' ? 'animate-swipe-right' : ''
       } ${swipeDirection === 'left' ? 'animate-swipe-left' : ''}`}
       style={{
@@ -101,16 +101,9 @@ export const TravelerCard = ({ traveler, onSwipe }: TravelerCardProps) => {
         )}
         
         <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
-          <Badge className="bg-primary/90 backdrop-blur-sm border-0 text-white text-lg px-4 py-2 shadow-lg">
-            <Icon name="Sparkles" className="mr-1 h-4 w-4" />
+          <Badge className="bg-primary border-0 text-white text-lg px-4 py-2 rounded-full shadow-md">
             {traveler.compatibility}%
           </Badge>
-          {traveler.verified && (
-            <Badge className="bg-accent/90 backdrop-blur-sm border-0 text-white px-3 py-1 shadow-lg">
-              <Icon name="ShieldCheck" className="mr-1 h-3 w-3" />
-              Verified
-            </Badge>
-          )}
         </div>
       </div>
 
@@ -127,74 +120,56 @@ export const TravelerCard = ({ traveler, onSwipe }: TravelerCardProps) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-xl">
-          <div className="flex items-center gap-1">
-            <Icon name="Star" className="h-4 w-4 text-secondary fill-secondary" />
-            <span className="font-semibold">{traveler.rating}</span>
-          </div>
-          <div className="w-px h-4 bg-border" />
-          <span className="text-sm text-muted-foreground">
-            {traveler.tripsCompleted} поездок
-          </span>
-          <div className="w-px h-4 bg-border" />
-          <span className="text-sm text-muted-foreground">
-            {traveler.reviews} отзывов
-          </span>
+        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <span>{traveler.tripsCompleted} поездок</span>
+          <span>•</span>
+          <span>{traveler.reviews} отзывов</span>
         </div>
 
-        <p className="text-sm text-muted-foreground">{traveler.bio}</p>
+        <p className="text-base leading-relaxed">{traveler.bio}</p>
 
         <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Icon name="Plane" className="h-5 w-5 text-primary" />
-            <span className="font-semibold">Едет в:</span>
-            <span className="text-primary">{traveler.nextDestination}</span>
+          <div className="flex items-center gap-2 text-primary font-medium">
+            <Icon name="MapPin" className="h-5 w-5" />
+            <span>{traveler.nextDestination}</span>
           </div>
 
           <div className="space-y-2">
-            <p className="text-sm font-semibold flex items-center gap-2">
-              <Icon name="Heart" className="h-4 w-4 text-secondary" />
-              Интересы:
-            </p>
+            <p className="text-sm font-medium text-muted-foreground">Интересы</p>
             <div className="flex flex-wrap gap-2">
               {traveler.interests.map((interest) => (
-                <Badge key={interest} variant="secondary" className="bg-secondary/10 text-secondary">
+                <Badge key={interest} variant="secondary" className="bg-muted hover:bg-muted/80 text-foreground rounded-full">
                   {interest}
                 </Badge>
               ))}
             </div>
           </div>
-
-          <div className="space-y-2">
-            <p className="text-sm font-semibold flex items-center gap-2">
-              <Icon name="Compass" className="h-4 w-4 text-accent" />
-              Стиль путешествий:
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {traveler.travelStyle.map((style) => (
-                <Badge key={style} variant="outline" className="border-accent text-accent">
-                  {style}
-                </Badge>
-              ))}
-            </div>
-          </div>
         </div>
 
-        <div className="flex gap-4 pt-4">
+        <div className="flex gap-3 pt-4">
           <Button
             size="lg"
             variant="outline"
-            className="flex-1 border-2 border-red-200 hover:bg-red-50 hover:border-red-300 text-red-500 h-16 rounded-2xl"
+            className="flex-1 h-14 rounded-full border-2 hover:bg-muted"
             onClick={() => handleSwipe('pass')}
           >
-            <Icon name="X" className="h-8 w-8" />
+            <Icon name="X" className="h-6 w-6" />
           </Button>
           <Button
             size="lg"
-            className="flex-1 bg-gradient-to-r from-primary to-secondary hover:opacity-90 h-16 rounded-2xl"
+            className="flex-[2] bg-primary hover:bg-primary/90 h-14 rounded-full text-base font-semibold"
             onClick={() => handleSwipe('like')}
           >
-            <Icon name="Heart" className="h-8 w-8" />
+            <Icon name="Heart" className="h-5 w-5 mr-2" />
+            Лайк
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            className="flex-1 h-14 rounded-full border-2 hover:bg-muted"
+            onClick={() => {}}
+          >
+            <Icon name="MessageCircle" className="h-6 w-6" />
           </Button>
         </div>
       </div>

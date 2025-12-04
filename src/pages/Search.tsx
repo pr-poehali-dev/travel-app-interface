@@ -44,21 +44,21 @@ const Search = () => {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b shadow-sm">
-        <div className="container mx-auto px-4 py-4">
+      <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
+            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full">
               <Icon name="ArrowLeft" className="h-5 w-5" />
             </Button>
-            <h1 className="text-xl font-bold text-foreground">
-              Поиск путешествий
+            <h1 className="text-xl font-semibold text-foreground">
+              Поиск
             </h1>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8 space-y-6 animate-fade-in">
-        <Card className="p-6 bg-white/90 backdrop-blur-sm border-0 shadow-xl">
+        <Card className="p-6 bg-white shadow-sm">
           <div className="space-y-6">
             <div>
               <Label className="text-lg font-semibold flex items-center gap-2 mb-3">

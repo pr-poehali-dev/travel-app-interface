@@ -20,16 +20,16 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b shadow-sm">
-        <div className="container mx-auto px-4 py-4">
+      <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
+            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full">
               <Icon name="ArrowLeft" className="h-5 w-5" />
             </Button>
-            <h1 className="text-xl font-bold text-foreground">
+            <h1 className="text-xl font-semibold text-foreground">
               Профиль
             </h1>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="rounded-full">
               <Icon name="Settings" className="h-5 w-5" />
             </Button>
           </div>
@@ -37,7 +37,7 @@ const Profile = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 space-y-6 animate-fade-in">
-        <Card className="p-6 bg-white/90 backdrop-blur-sm border-0 shadow-xl">
+        <Card className="p-6 bg-white shadow-sm">
           <div className="flex flex-col items-center text-center space-y-4">
             <Avatar className="h-32 w-32 ring-4 ring-primary/20">
               <AvatarImage src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop" />
@@ -53,12 +53,8 @@ const Profile = () => {
             </div>
 
             <div className="flex gap-2">
-              <Badge className="bg-gradient-to-r from-primary to-secondary text-white border-0">
-                <Icon name="Shield" className="mr-1 h-3 w-3" />
+              <Badge className="bg-primary text-white rounded-full">
                 Верифицирован
-              </Badge>
-              <Badge variant="outline" className="border-accent text-accent">
-                Путешественник
               </Badge>
             </div>
 
@@ -68,11 +64,9 @@ const Profile = () => {
 
             <Button
               size="lg"
-              variant="outline"
-              className="w-full mt-4"
+              className="w-full mt-4 bg-primary hover:bg-primary/90 rounded-full"
               onClick={() => navigate('/onboarding')}
             >
-              <Icon name="Edit" className="mr-2 h-5 w-5" />
               Редактировать профиль
             </Button>
           </div>
@@ -82,7 +76,7 @@ const Profile = () => {
           {stats.map((stat) => (
             <Card
               key={stat.label}
-              className="p-4 bg-white/90 backdrop-blur-sm border-0 shadow-xl text-center"
+              className="p-4 bg-white shadow-sm text-center"
             >
               <Icon
                 name={stat.icon as any}
@@ -94,15 +88,14 @@ const Profile = () => {
           ))}
         </div>
 
-        <Card className="p-6 bg-white/90 backdrop-blur-sm border-0 shadow-xl space-y-4">
+        <Card className="p-6 bg-white shadow-sm space-y-4">
           <div>
-            <h3 className="font-semibold flex items-center gap-2 mb-3">
-              <Icon name="Heart" className="h-5 w-5 text-secondary" />
+            <h3 className="font-medium text-sm text-muted-foreground mb-3">
               Интересы
             </h3>
             <div className="flex flex-wrap gap-2">
               {interests.map((interest) => (
-                <Badge key={interest} variant="secondary" className="bg-secondary/10 text-secondary">
+                <Badge key={interest} variant="secondary" className="bg-muted hover:bg-muted/80 text-foreground rounded-full">
                   {interest}
                 </Badge>
               ))}
@@ -110,13 +103,12 @@ const Profile = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold flex items-center gap-2 mb-3">
-              <Icon name="Compass" className="h-5 w-5 text-accent" />
+            <h3 className="font-medium text-sm text-muted-foreground mb-3">
               Стиль путешествий
             </h3>
             <div className="flex flex-wrap gap-2">
               {travelStyle.map((style) => (
-                <Badge key={style} variant="outline" className="border-accent text-accent">
+                <Badge key={style} variant="secondary" className="bg-muted hover:bg-muted/80 text-foreground rounded-full">
                   {style}
                 </Badge>
               ))}
@@ -124,9 +116,8 @@ const Profile = () => {
           </div>
         </Card>
 
-        <Card className="p-6 bg-white/90 backdrop-blur-sm border-0 shadow-xl space-y-4">
+        <Card className="p-6 bg-white shadow-sm space-y-4">
           <h3 className="font-semibold flex items-center gap-2">
-            <Icon name="Target" className="h-5 w-5 text-primary" />
             Заполненность профиля
           </h3>
           <div className="space-y-2">
@@ -136,13 +127,13 @@ const Profile = () => {
           <div className="space-y-2 text-sm">
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2">
-                <Icon name="Check" className="h-4 w-4 text-green-500" />
+                <Icon name="Check" className="h-4 w-4 text-secondary" />
                 Основная информация
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2">
-                <Icon name="Check" className="h-4 w-4 text-green-500" />
+                <Icon name="Check" className="h-4 w-4 text-secondary" />
                 Интересы и стиль
               </span>
             </div>
@@ -155,7 +146,7 @@ const Profile = () => {
           </div>
         </Card>
 
-        <Card className="p-6 bg-white/90 backdrop-blur-sm border-0 shadow-xl space-y-3">
+        <Card className="p-6 bg-white shadow-sm space-y-3">
           <h3 className="font-semibold flex items-center gap-2 mb-3">
             <Icon name="Map" className="h-5 w-5 text-primary" />
             Последние поездки
