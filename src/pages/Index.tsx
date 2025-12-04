@@ -30,7 +30,8 @@ const Index = () => {
       <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-semibold text-foreground">Знакомства</h1>
+            <h1 className="text-xl font-semibold text-foreground">TRIPFinder
+</h1>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => navigate('/notifications')}
