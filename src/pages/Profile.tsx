@@ -15,18 +15,18 @@ const Profile = () => {
     { label: 'Отзывы', value: '23', icon: 'Star' },
   ];
 
-  const interests = ['Фотография', 'Хайкинг', 'Кафе', 'Йога', 'Серфинг'];
-  const travelStyle = ['Приключения', 'Культура', 'Природа', 'Релакс'];
+  const interests = ['Фотография', 'Треккинг', 'Местная кухня', 'Рыбалка', 'Кемпинг'];
+  const travelStyle = ['Природа', 'Культура', 'Активный отдых', 'Горы'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 pb-24">
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/20">
+    <div className="min-h-screen bg-background pb-24">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
               <Icon name="ArrowLeft" className="h-5 w-5" />
             </Button>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+            <h1 className="text-xl font-bold text-foreground">
               Профиль
             </h1>
             <Button variant="ghost" size="icon">
@@ -40,8 +40,8 @@ const Profile = () => {
         <Card className="p-6 bg-white/90 backdrop-blur-sm border-0 shadow-xl">
           <div className="flex flex-col items-center text-center space-y-4">
             <Avatar className="h-32 w-32 ring-4 ring-primary/20">
-              <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=You" />
-              <AvatarFallback>Я</AvatarFallback>
+              <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop" />
+              <AvatarFallback>ИП</AvatarFallback>
             </Avatar>
 
             <div>
@@ -63,8 +63,7 @@ const Profile = () => {
             </div>
 
             <p className="text-sm text-muted-foreground max-w-md">
-              Люблю исследовать новые места и встречать интересных людей. Предпочитаю активный отдых
-              и культурные достопримечательности.
+              Путешествую по России уже 5 лет. Люблю горы, треккинг и кемпинги. Мечтаю побывать на всех вершинах Кавказа.
             </p>
 
             <Button
@@ -161,7 +160,7 @@ const Profile = () => {
             <Icon name="Map" className="h-5 w-5 text-primary" />
             Последние поездки
           </h3>
-          {['Грузия', 'Турция', 'Италия'].map((destination, i) => (
+          {['Алтай', 'Камчатка', 'Карелия'].map((destination, i) => (
             <div key={destination} className="flex items-center justify-between py-2 border-b last:border-0">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">

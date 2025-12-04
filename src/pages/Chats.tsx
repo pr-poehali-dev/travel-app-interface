@@ -34,8 +34,8 @@ const Chats = () => {
     {
       id: 1,
       name: 'Анна',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Anna',
-      lastMessage: 'Когда планируешь вылет в Грузию?',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
+      lastMessage: 'Ты уже покупал билеты на Алтай?',
       timestamp: '10:30',
       unread: 2,
       isOnline: true,
@@ -43,8 +43,8 @@ const Chats = () => {
     {
       id: 2,
       name: 'Максим',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Max',
-      lastMessage: 'Смотрел отель на Бали, что думаешь?',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
+      lastMessage: 'Есть места в группу на Камчатку в июле',
       timestamp: 'Вчера',
       unread: 0,
       isOnline: false,
@@ -52,19 +52,29 @@ const Chats = () => {
     {
       id: 3,
       name: 'Елена',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Elena',
-      lastMessage: 'Нашла классное место для йоги!',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
+      lastMessage: 'Посмотри фото с Байкала 😍',
       timestamp: '2 дня',
       unread: 1,
       isOnline: true,
+    },
+    {
+      id: 4,
+      name: 'Дмитрий',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
+      lastMessage: 'Сегодня едем в Домбай, присоединяйся!',
+      timestamp: '1 неделю',
+      unread: 0,
+      isOnline: false,
     },
   ];
 
   const messages: Message[] = [
     { id: 1, text: 'Привет! Видела твой профиль', isMine: false, timestamp: '10:15' },
-    { id: 2, text: 'Привет! Да, тоже заинтересовалась 🙂', isMine: true, timestamp: '10:18' },
-    { id: 3, text: 'Когда планируешь вылет в Грузию?', isMine: false, timestamp: '10:30' },
-    { id: 4, text: 'Думаю в конце месяца, а ты?', isMine: true, timestamp: '10:32' },
+    { id: 2, text: 'Привет! Да, тоже хочу на Алтай 🙂', isMine: true, timestamp: '10:18' },
+    { id: 3, text: 'Ты уже покупал билеты на Алтай?', isMine: false, timestamp: '10:30' },
+    { id: 4, text: 'Пока смотрю варианты. Думаю на начало июня поехать', isMine: true, timestamp: '10:32' },
+    { id: 5, text: 'Отлично! Я тоже присматриваю на эти даты. Может вместе организуем?', isMine: false, timestamp: '10:35' },
   ];
 
   const handleSendMessage = () => {
@@ -77,8 +87,8 @@ const Chats = () => {
   const selectedChatData = chats.find((c) => c.id === selectedChat);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 pb-24">
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/20">
+    <div className="min-h-screen bg-background pb-24">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             {selectedChat ? (
@@ -111,7 +121,7 @@ const Chats = () => {
                 <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
                   <Icon name="ArrowLeft" className="h-5 w-5" />
                 </Button>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                <h1 className="text-xl font-bold text-foreground">
                   Сообщения
                 </h1>
               </>

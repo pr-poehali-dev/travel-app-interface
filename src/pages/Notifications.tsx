@@ -23,25 +23,25 @@ const Notifications = () => {
       id: 1,
       type: 'match',
       title: 'Новое совпадение!',
-      description: 'Анна тоже хочет посетить Грузию в мае',
+      description: 'Анна тоже хочет на Алтай в июне',
       timestamp: '5 мин назад',
       isRead: false,
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Anna',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
     },
     {
       id: 2,
       type: 'message',
       title: 'Новое сообщение',
-      description: 'Максим: "Смотрел отель на Бали..."',
+      description: 'Максим: "Есть места в группу на Камчатку..."',
       timestamp: '1 час назад',
       isRead: false,
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Max',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
     },
     {
       id: 3,
       type: 'route',
       title: 'Новый маршрут',
-      description: 'Добавлен маршрут "Горы Кавказа" в твой регион',
+      description: 'Добавлен маршрут "Байкал: жемчужина Сибири" в твой регион',
       timestamp: '2 часа назад',
       isRead: true,
     },
@@ -86,14 +86,14 @@ const Notifications = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 pb-24">
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/20">
+    <div className="min-h-screen bg-background pb-24">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
               <Icon name="ArrowLeft" className="h-5 w-5" />
             </Button>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent flex-1">
+            <h1 className="text-xl font-bold text-foreground flex-1">
               Уведомления
             </h1>
             <Button variant="ghost" size="sm">

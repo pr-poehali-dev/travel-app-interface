@@ -23,13 +23,13 @@ const MapView = () => {
   const mapPoints: MapPoint[] = [
     {
       id: 1,
-      name: 'Пляжи Пхукета',
-      lat: 7.89,
-      lng: 98.39,
+      name: 'Байкал',
+      lat: 53.55,
+      lng: 108.16,
       type: 'route',
-      travelers: 12,
-      description: 'Идеальное место для отдыха и снорклинга',
-      image: 'https://cdn.poehali.dev/projects/d48f06ae-d0c1-4065-9ebb-109caf17295d/files/482adfa2-c38d-43c7-a52b-6e69f4e08ccb.jpg',
+      travelers: 15,
+      description: 'Глубочайшее озеро планеты. Остров Ольхон, ледяные гроты, нерпы',
+      image: 'https://images.unsplash.com/photo-1590004953392-5aba2e72269a?w=800&h=600&fit=crop',
     },
     {
       id: 2,
@@ -38,29 +38,60 @@ const MapView = () => {
       lng: 42.44,
       type: 'route',
       travelers: 8,
-      description: 'Восхождение на самую высокую вершину Европы',
-      image: 'https://cdn.poehali.dev/projects/d48f06ae-d0c1-4065-9ebb-109caf17295d/files/d7ab771b-8d42-4aef-ba96-a7716af1adbd.jpg',
+      description: 'Восхождение на самую высокую вершину России и Европы (5642 м)',
+      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
     },
     {
       id: 3,
-      name: 'Прага',
-      lat: 50.08,
-      lng: 14.43,
+      name: 'Алтай',
+      lat: 51.95,
+      lng: 85.96,
+      type: 'route',
+      travelers: 12,
+      description: 'Горные трекки, Чемал, Телецкое озеро, рафтинг по Катуни',
+      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
+    },
+    {
+      id: 4,
+      name: 'Камчатка',
+      lat: 53.01,
+      lng: 158.65,
       type: 'poi',
-      description: 'Город средневековой архитектуры',
-      image: 'https://cdn.poehali.dev/projects/d48f06ae-d0c1-4065-9ebb-109caf17295d/files/3492ac52-150d-45a8-a82f-3e008778ad1b.jpg',
+      travelers: 6,
+      description: 'Земля вулканов и гейзеров. Долина гейзеров, Курильское озеро',
+      image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=600&fit=crop',
+    },
+    {
+      id: 5,
+      name: 'Карелия',
+      lat: 61.78,
+      lng: 34.35,
+      type: 'poi',
+      travelers: 14,
+      description: 'Кижи, Валаам, Рускеала. Край озёр и карельских лесов',
+      image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&h=600&fit=crop',
+    },
+    {
+      id: 6,
+      name: 'Золотое кольцо',
+      lat: 56.85,
+      lng: 40.39,
+      type: 'route',
+      travelers: 18,
+      description: 'Владимир, Суздаль, Ярославль. Исторические города Руси',
+      image: 'https://images.unsplash.com/photo-1547448415-e9f5b28e570d?w=800&h=600&fit=crop',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 pb-24">
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/20">
+    <div className="min-h-screen bg-background pb-24">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
               <Icon name="ArrowLeft" className="h-5 w-5" />
             </Button>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+            <h1 className="text-xl font-bold text-foreground">
               Карта маршрутов
             </h1>
           </div>

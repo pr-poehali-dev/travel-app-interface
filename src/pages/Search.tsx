@@ -21,14 +21,14 @@ const Search = () => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
   const travelTypes = [
-    { id: 'beach', label: 'Пляж', icon: 'Waves' },
     { id: 'mountains', label: 'Горы', icon: 'Mountain' },
-    { id: 'city', label: 'Город', icon: 'Building2' },
-    { id: 'adventure', label: 'Приключения', icon: 'Compass' },
-    { id: 'culture', label: 'Культура', icon: 'Landmark' },
     { id: 'nature', label: 'Природа', icon: 'Trees' },
+    { id: 'culture', label: 'Культура', icon: 'Landmark' },
+    { id: 'trekking', label: 'Треккинг', icon: 'Footprints' },
+    { id: 'lakes', label: 'Озёра', icon: 'Waves' },
+    { id: 'adventure', label: 'Приключения', icon: 'Compass' },
     { id: 'extreme', label: 'Экстрим', icon: 'Zap' },
-    { id: 'relax', label: 'Релакс', icon: 'Sparkles' },
+    { id: 'history', label: 'История', icon: 'BookOpen' },
   ];
 
   const toggleType = (typeId: string) => {
@@ -43,14 +43,14 @@ const Search = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 pb-24">
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/20">
+    <div className="min-h-screen bg-background pb-24">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
               <Icon name="ArrowLeft" className="h-5 w-5" />
             </Button>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+            <h1 className="text-xl font-bold text-foreground">
               Поиск путешествий
             </h1>
           </div>
