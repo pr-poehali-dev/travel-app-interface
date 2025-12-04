@@ -1,247 +1,27 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
-
-interface Traveler {
-  id: number;
-  name: string;
-  age: number;
-  avatar: string;
-  location: string;
-  compatibility: number;
-  interests: string[];
-  travelStyle: string[];
-  bio: string;
-  nextDestination: string;
-  rating: number;
-  tripsCompleted: number;
-  reviews: number;
-  verified: boolean;
-}
-
-interface Route {
-  id: number;
-  title: string;
-  image: string;
-  destination: string;
-  duration: string;
-  budget: string;
-  travelers: number;
-  tags: string[];
-}
+import { TravelerCard } from '@/components/TravelerCard';
+import { RouteCard } from '@/components/RouteCard';
+import { BottomNavigation } from '@/components/BottomNavigation';
+import { TRAVELERS_DATA, ROUTES_DATA } from '@/types/travel';
 
 const Index = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('travelers');
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const cardRef = useRef<HTMLDivElement>(null);
-  const startPosRef = useRef({ x: 0, y: 0 });
 
-  const travelers: Traveler[] = [
-    {
-      id: 1,
-      name: 'Анна',
-      age: 27,
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
-      location: 'Москва',
-      compatibility: 92,
-      interests: ['Фотография', 'Треккинг', 'Местная кухня'],
-      travelStyle: ['Культура', 'Природа', 'История'],
-      bio: 'Мечтаю покорить Эльбрус и увидеть все золотые кольца России',
-      nextDestination: 'Алтай',
-      rating: 4.8,
-      tripsCompleted: 12,
-      reviews: 23,
-      verified: true,
-    },
-    {
-      id: 2,
-      name: 'Максим',
-      age: 31,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-      location: 'Санкт-Петербург',
-      compatibility: 85,
-      interests: ['Рыбалка', 'Кемпинг', 'Джипинг'],
-      travelStyle: ['Приключения', 'Активный отдых', 'Природа'],
-      bio: 'Путешествую по России на УАЗе. Ищу попутчиков в дикие края',
-      nextDestination: 'Камчатка',
-      rating: 4.6,
-      tripsCompleted: 8,
-      reviews: 15,
-      verified: true,
-    },
-    {
-      id: 3,
-      name: 'Елена',
-      age: 24,
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
-      location: 'Казань',
-      compatibility: 88,
-      interests: ['Архитектура', 'Музеи', 'Гастротуры'],
-      travelStyle: ['Культура', 'История', 'Гастрономия'],
-      bio: 'Изучаю культурное наследие России. Собираю истории малых городов',
-      nextDestination: 'Карелия',
-      rating: 4.9,
-      tripsCompleted: 16,
-      reviews: 31,
-      verified: true,
-    },
-    {
-      id: 4,
-      name: 'Дмитрий',
-      age: 29,
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
-      location: 'Екатеринбург',
-      compatibility: 90,
-      interests: ['Горные лыжи', 'Сноуборд', 'Хайкинг'],
-      travelStyle: ['Экстрим', 'Спорт', 'Горы'],
-      bio: 'Покоритель уральских вершин. Планирую Кавказ следующим летом',
-      nextDestination: 'Сочи',
-      rating: 4.7,
-      tripsCompleted: 14,
-      reviews: 28,
-      verified: true,
-    },
-    {
-      id: 5,
-      name: 'София',
-      age: 26,
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop',
-      location: 'Новосибирск',
-      compatibility: 87,
-      interests: ['Фото', 'Закаты', 'Этно-туры'],
-      travelStyle: ['Природа', 'Культура', 'Фотография'],
-      bio: 'Снимаю красоты Сибири. Хочу посетить все нацпарки страны',
-      nextDestination: 'Байкал',
-      rating: 4.8,
-      tripsCompleted: 11,
-      reviews: 19,
-      verified: false,
-    },
-  ];
-
-  const routes: Route[] = [
-    {
-      id: 1,
-      title: 'Золотое кольцо России',
-      image: 'https://images.unsplash.com/photo-1547448415-e9f5b28e570d?w=800&h=600&fit=crop',
-      destination: 'Владимир, Суздаль, Ярославль',
-      duration: '5 дней',
-      budget: '₽25,000',
-      travelers: 15,
-      tags: ['История', 'Архитектура', 'Культура'],
-    },
-    {
-      id: 2,
-      title: 'Горы Кавказа',
-      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
-      destination: 'Домбай, Архыз, Эльбрус',
-      duration: '7 дней',
-      budget: '₽35,000',
-      travelers: 8,
-      tags: ['Хайкинг', 'Горы', 'Природа'],
-    },
-    {
-      id: 3,
-      title: 'Байкал: жемчужина Сибири',
-      image: 'https://images.unsplash.com/photo-1590004953392-5aba2e72269a?w=800&h=600&fit=crop',
-      destination: 'Иркутск, Листвянка, Ольхон',
-      duration: '10 дней',
-      budget: '₽45,000',
-      travelers: 12,
-      tags: ['Природа', 'Озеро', 'Треккинг'],
-    },
-    {
-      id: 4,
-      title: 'Алтай: край гор и рек',
-      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
-      destination: 'Белокуриха, Чемал, Телецкое озеро',
-      duration: '8 дней',
-      budget: '₽38,000',
-      travelers: 10,
-      tags: ['Горы', 'Рафтинг', 'Экотуризм'],
-    },
-    {
-      id: 5,
-      title: 'Карелия: край озёр',
-      image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&h=600&fit=crop',
-      destination: 'Кижи, Рускеала, Валаам',
-      duration: '6 дней',
-      budget: '₽32,000',
-      travelers: 14,
-      tags: ['Культура', 'Природа', 'Водный туризм'],
-    },
-    {
-      id: 6,
-      title: 'Камчатка: вулканы и океан',
-      image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=600&fit=crop',
-      destination: 'Петропавловск-Камчатский, Долина гейзеров',
-      duration: '12 дней',
-      budget: '₽85,000',
-      travelers: 6,
-      tags: ['Вулканы', 'Экстрим', 'Дикая природа'],
-    },
-  ];
-
-  const currentTraveler = travelers[currentCardIndex];
+  const currentTraveler = TRAVELERS_DATA[currentCardIndex];
 
   const handleSwipe = (direction: 'like' | 'pass') => {
-    setSwipeDirection(direction === 'like' ? 'right' : 'left');
-    
-    setTimeout(() => {
-      if (direction === 'like') {
-        console.log('Liked:', currentTraveler.name);
-      }
-      if (currentCardIndex < travelers.length - 1) {
-        setCurrentCardIndex(currentCardIndex + 1);
-      } else {
-        setCurrentCardIndex(0);
-      }
-      setSwipeDirection(null);
-      setDragOffset({ x: 0, y: 0 });
-    }, 300);
-  };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    startPosRef.current = { x: e.clientX, y: e.clientY };
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setIsDragging(true);
-    startPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    const offsetX = e.clientX - startPosRef.current.x;
-    const offsetY = e.clientY - startPosRef.current.y;
-    setDragOffset({ x: offsetX, y: offsetY });
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
-    const offsetX = e.touches[0].clientX - startPosRef.current.x;
-    const offsetY = e.touches[0].clientY - startPosRef.current.y;
-    setDragOffset({ x: offsetX, y: offsetY });
-  };
-
-  const handleRelease = () => {
-    if (!isDragging) return;
-    setIsDragging(false);
-
-    if (Math.abs(dragOffset.x) > 150) {
-      handleSwipe(dragOffset.x > 0 ? 'like' : 'pass');
+    if (direction === 'like') {
+      console.log('Liked:', currentTraveler.name);
+    }
+    if (currentCardIndex < TRAVELERS_DATA.length - 1) {
+      setCurrentCardIndex(currentCardIndex + 1);
     } else {
-      setDragOffset({ x: 0, y: 0 });
+      setCurrentCardIndex(0);
     }
   };
 
@@ -254,305 +34,70 @@ const Index = () => {
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
                 <Icon name="Heart" className="h-5 w-5 text-white" />
               </div>
-              <h1 className="text-xl font-bold text-foreground">TripFinder</h1>
+              <h1 className="text-xl font-bold text-foreground">
+                TravelFRIENDS
+              </h1>
             </div>
-            <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hover:bg-white/50"
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigate('/map')}
+                className="p-2 hover:bg-muted rounded-lg transition-colors"
+              >
+                <Icon name="Map" className="h-5 w-5 text-foreground" />
+              </button>
+              <button
                 onClick={() => navigate('/notifications')}
+                className="p-2 hover:bg-muted rounded-lg transition-colors relative"
               >
-                <Icon name="Bell" className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hover:bg-white/50"
-                onClick={() => navigate('/chats')}
-              >
-                <Icon name="MessageCircle" className="h-5 w-5" />
-              </Button>
-              <Avatar className="h-10 w-10 ring-2 ring-primary/20">
-                <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=You" />
-                <AvatarFallback>Я</AvatarFallback>
-              </Avatar>
+                <Icon name="Bell" className="h-5 w-5 text-foreground" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 pb-24">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8 bg-white/50 backdrop-blur-sm p-1">
+          <TabsList className="grid w-full grid-cols-2 mb-8 bg-white/90 backdrop-blur-sm border-0 shadow-lg p-2 h-14">
             <TabsTrigger
               value="travelers"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white text-lg font-semibold"
             >
-              <Icon name="Users" className="mr-2 h-4 w-4" />
-              Попутчики
+              <Icon name="Users" className="mr-2 h-5 w-5" />
+              Путешественники
             </TabsTrigger>
             <TabsTrigger
               value="routes"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-secondary data-[state=active]:to-accent data-[state=active]:text-white"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white text-lg font-semibold"
             >
-              <Icon name="Map" className="mr-2 h-4 w-4" />
+              <Icon name="Map" className="mr-2 h-5 w-5" />
               Маршруты
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="travelers" className="space-y-6 animate-fade-in">
-            <div className="max-w-lg mx-auto relative" style={{ height: '600px' }}>
-              <Card
-                ref={cardRef}
-                className="absolute inset-0 overflow-hidden border-0 shadow-2xl bg-white/90 backdrop-blur-sm cursor-grab active:cursor-grabbing select-none"
-                style={{
-                  transform: `translate(${dragOffset.x}px, ${dragOffset.y}px) rotate(${dragOffset.x * 0.05}deg)`,
-                  transition: isDragging ? 'none' : 'all 0.3s ease-out',
-                  opacity: swipeDirection ? 0 : 1,
-                }}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleRelease}
-                onMouseLeave={handleRelease}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleRelease}
-              >
-                <div className="relative h-96 overflow-hidden">
-                  <img
-                    src={currentTraveler.avatar}
-                    alt={currentTraveler.name}
-                    className="w-full h-full object-cover pointer-events-none"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  
-                  {dragOffset.x > 50 && (
-                    <div className="absolute top-8 left-8 text-6xl font-bold text-green-500 border-4 border-green-500 px-6 py-2 rounded-lg rotate-12">
-                      ❤️
-                    </div>
-                  )}
-                  
-                  {dragOffset.x < -50 && (
-                    <div className="absolute top-8 right-8 text-6xl font-bold text-red-500 border-4 border-red-500 px-6 py-2 rounded-lg -rotate-12">
-                      ✖
-                    </div>
-                  )}
-                  
-                  <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
-                    <Badge className="bg-primary/90 backdrop-blur-sm border-0 text-white text-lg px-4 py-2 shadow-lg">
-                      <Icon name="Sparkles" className="mr-1 h-4 w-4" />
-                      {currentTraveler.compatibility}%
-                    </Badge>
-                    {currentTraveler.verified && (
-                      <Badge className="bg-accent/90 backdrop-blur-sm border-0 text-white px-3 py-1 shadow-lg">
-                        <Icon name="ShieldCheck" className="mr-1 h-3 w-3" />
-                        Verified
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-
-                <div className="p-6 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h2 className="text-3xl font-bold">
-                        {currentTraveler.name}, {currentTraveler.age}
-                      </h2>
-                      <p className="text-muted-foreground flex items-center gap-1">
-                        <Icon name="MapPin" className="h-4 w-4" />
-                        {currentTraveler.location}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-xl">
-                    <div className="flex items-center gap-1">
-                      <Icon name="Star" className="h-4 w-4 text-secondary fill-secondary" />
-                      <span className="font-semibold">{currentTraveler.rating}</span>
-                    </div>
-                    <div className="w-px h-4 bg-border" />
-                    <span className="text-sm text-muted-foreground">
-                      {currentTraveler.tripsCompleted} поездок
-                    </span>
-                    <div className="w-px h-4 bg-border" />
-                    <span className="text-sm text-muted-foreground">
-                      {currentTraveler.reviews} отзывов
-                    </span>
-                  </div>
-
-                  <p className="text-sm text-muted-foreground">{currentTraveler.bio}</p>
-
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2">
-                      <Icon name="Plane" className="h-5 w-5 text-primary" />
-                      <span className="font-semibold">Едет в:</span>
-                      <span className="text-primary">{currentTraveler.nextDestination}</span>
-                    </div>
-
-                    <div className="space-y-2">
-                      <p className="text-sm font-semibold flex items-center gap-2">
-                        <Icon name="Heart" className="h-4 w-4 text-secondary" />
-                        Интересы:
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {currentTraveler.interests.map((interest) => (
-                          <Badge key={interest} variant="secondary" className="bg-secondary/10 text-secondary">
-                            {interest}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <p className="text-sm font-semibold flex items-center gap-2">
-                        <Icon name="Compass" className="h-4 w-4 text-accent" />
-                        Стиль путешествий:
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {currentTraveler.travelStyle.map((style) => (
-                          <Badge key={style} variant="outline" className="border-accent text-accent">
-                            {style}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-4 pt-4">
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="flex-1 border-2 hover:bg-destructive/10 hover:border-destructive hover:text-destructive transition-all"
-                      onClick={() => handleSwipe('pass')}
-                    >
-                      <Icon name="X" className="mr-2 h-5 w-5" />
-                      Пропустить
-                    </Button>
-                    <Button
-                      size="lg"
-                      className="flex-1 bg-gradient-to-r from-primary via-secondary to-accent hover:shadow-2xl hover:scale-105 transition-all"
-                      onClick={() => handleSwipe('like')}
-                    >
-                      <Icon name="Heart" className="mr-2 h-5 w-5" />
-                      Интересно!
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-
-              <div className="flex justify-center gap-2 mt-4">
-                {travelers.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`h-2 rounded-full transition-all ${
-                      index === currentCardIndex
-                        ? 'w-8 bg-gradient-to-r from-primary to-secondary'
-                        : 'w-2 bg-gray-300'
-                    }`}
-                  />
-                ))}
+          <TabsContent value="travelers" className="animate-fade-in">
+            <div className="space-y-6">
+              <div className="text-center space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  {currentCardIndex + 1} / {TRAVELERS_DATA.length}
+                </p>
               </div>
+              <TravelerCard traveler={currentTraveler} onSwipe={handleSwipe} />
             </div>
           </TabsContent>
 
-          <TabsContent value="routes" className="space-y-6 animate-fade-in">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {routes.map((route, index) => (
-                <Card
-                  key={route.id}
-                  className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all hover:scale-105 bg-white/90 backdrop-blur-sm animate-scale-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <img src={route.image} alt={route.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <Badge className="absolute bottom-4 left-4 bg-white/90 text-foreground border-0">
-                      <Icon name="Users" className="mr-1 h-3 w-3" />
-                      {route.travelers} попутчиков
-                    </Badge>
-                  </div>
-
-                  <div className="p-5 space-y-3">
-                    <h3 className="text-xl font-bold">{route.title}</h3>
-                    <p className="text-sm text-muted-foreground flex items-center gap-1">
-                      <Icon name="MapPin" className="h-4 w-4" />
-                      {route.destination}
-                    </p>
-
-                    <div className="flex gap-4 text-sm">
-                      <span className="flex items-center gap-1 text-muted-foreground">
-                        <Icon name="Calendar" className="h-4 w-4" />
-                        {route.duration}
-                      </span>
-                      <span className="flex items-center gap-1 text-primary font-semibold">
-                        <Icon name="Wallet" className="h-4 w-4" />
-                        {route.budget}
-                      </span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      {route.tags.map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:shadow-lg transition-all">
-                      Присоединиться
-                      <Icon name="ArrowRight" className="ml-2 h-4 w-4" />
-                    </Button>
-                  </div>
-                </Card>
+          <TabsContent value="routes" className="animate-fade-in">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {ROUTES_DATA.map((route) => (
+                <RouteCard key={route.id} route={route} />
               ))}
             </div>
           </TabsContent>
         </Tabs>
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-white/20 z-50">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-around py-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="flex-col h-auto py-2 hover:bg-primary/10"
-              onClick={() => navigate('/')}
-            >
-              <Icon name="Compass" className="h-6 w-6 text-primary" />
-              <span className="text-xs mt-1">Открыть</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="flex-col h-auto py-2 hover:bg-primary/10"
-              onClick={() => navigate('/search')}
-            >
-              <Icon name="Search" className="h-6 w-6" />
-              <span className="text-xs mt-1">Поиск</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="flex-col h-auto py-2 hover:bg-primary/10"
-              onClick={() => navigate('/map')}
-            >
-              <Icon name="Map" className="h-6 w-6" />
-              <span className="text-xs mt-1">Карта</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="flex-col h-auto py-2 hover:bg-primary/10"
-              onClick={() => navigate('/profile')}
-            >
-              <Icon name="User" className="h-6 w-6" />
-              <span className="text-xs mt-1">Профиль</span>
-            </Button>
-          </div>
-        </div>
-      </nav>
+      <BottomNavigation onNavigate={navigate} currentPath="/" />
     </div>
   );
 };
